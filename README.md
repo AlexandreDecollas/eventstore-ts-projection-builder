@@ -71,7 +71,7 @@ export interface ProjectionOptionsModel {
 
 You can add linkTo or emit method into your callbacks by using the given ones of the lib.
 
-The main advantage of this way to do is that you can type your callbacks and test it easily. For example in [the example given](./examples/projection.builder.spec.ts), the state, the events and the callbacks are fully typed, and you can add the structures you want. That makes the projection highly maintainable.
+The main advantage of this way to do is that you can type your callbacks and test it easily. For example in [the example given](https://github.com/AlexandreDecollas/eventstore-ts-projection-builder/tree/master/examples), the state, the events and the callbacks are fully typed, and you can add the structures you want. That makes the projection highly maintainable.
 This example is volontary a bit complex, to show that this lib allows to use custom structures thanks to typescript, that would have been hard to use in pure js because of absence of types.
 
 
