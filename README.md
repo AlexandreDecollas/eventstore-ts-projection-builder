@@ -127,5 +127,5 @@ fromStreams("guest.registered")
       state.guests.push(event.data.clientName);
     },
   })
-  .outputState();
+  .outputState(); 
 ```
