@@ -92,6 +92,7 @@ export const guestRegisteredEventCallBack = (
     }
   }
   state.guests.push(event.data.clientName);
+  emit('myStream', 'myEventType', event.data, event.metadata)
 };
 
 export const buildRegisteredGuestsProjection = (): string => {
@@ -125,6 +126,7 @@ fromStreams("guest.registered")
         }
       }
       state.guests.push(event.data.clientName);
+      emit('myStream', 'myEventType', event.data, event.metadata)
     },
   })
   .outputState(); 
