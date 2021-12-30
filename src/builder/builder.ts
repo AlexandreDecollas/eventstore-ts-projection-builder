@@ -55,8 +55,6 @@ export class Builder {
     }
     const stringifiedProjection = stringBuilder
       .join('')
-      .replace(/\(0, .+\.emit\)?/g, '\remit')
-      .replace(/\(0, .+\.linkTo\)?/g, '\rlinkTo');
 
     return format(stringifiedProjection, { parser: 'typescript' });
   }
