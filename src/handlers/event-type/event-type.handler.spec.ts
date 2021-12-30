@@ -44,4 +44,6 @@ describe('EventTypeHandler', () => {
   it(`should not contains any '};' sequence after toString`, () => {
     expect(handler.toString().indexOf('};')).toEqual(-1);
   });
+
+
 });
