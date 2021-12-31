@@ -4,7 +4,7 @@ import {
   roomAddedEventHandlerCallBack,
   RoomBookedEvent,
   roomBookedEventHandlerCallBack
-} from './projection1.for-example';
+} from './projection.for-example';
 
 describe('RoomAvailabilityProjection', () => {
   it('A console.log example', () => {
