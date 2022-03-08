@@ -2,7 +2,7 @@
 
 The aim of this lib is to give a helper for building eventstore projections using the strength of ts.
 
-This lib is based on [this official documentation page](https://developers.eventstore.com/server/v21.6/projections/user-defined-projections.html) 
+This lib is based on [this official documentation page](https://developers.eventstore.com/server/v21.10/projections.html#introduction) 
 
 ## How to build a projection
 A first example will be very explicit :
@@ -30,7 +30,7 @@ As you can see on this peace of code, you just have to declare a builder method.
 
 The result of `buildRoomAvailabilityProjection()` will be the projection as string, ready to be upserted into eventstore. The code produced corresponds to the typescript callbacks compiled in js and cleaned with prettier. So it's highly readable, and easy to debug in the eventstore interface if needed.
 
-Assuming that you already know how to build a projection, and what is a selector, a filter etc (yet based on [the doc](https://developers.eventstore.com/server/v21.6/projections/user-defined-projections.html)), here is the list of each projection element available in this lib : 
+Assuming that you already know how to build a projection, and what is a selector, a filter etc (yet based on [the doc](https://developers.eventstore.com/server/v21.10/projections.html#introduction)), here is the list of each projection element available in this lib : 
 
 The list of selectors : 
 ```text
