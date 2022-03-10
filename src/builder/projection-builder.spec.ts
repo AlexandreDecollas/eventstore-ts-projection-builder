@@ -18,6 +18,7 @@ import {
   WhenFilter,
 } from "../filters";
 import {
+  EXTERNAL_STRING,
   EXTERNAL_VALUE,
   EXTERNAL_VALUES,
 } from "./projection-builder.spec.helper";
@@ -113,12 +114,24 @@ describe("ProjectionBuilder", () => {
     );
   });
 
-  it(`should be able to import external constants`, () => {
+  it(`should be able to import external constants when it's a number`, () => {
     const projection = builder
       .addGlobalObject(new GlobalObject("EXTERNAL_VALUE", EXTERNAL_VALUE))
       .exportProjection();
 
     expect(projection).toEqual(tsFormat(`const EXTERNAL_VALUE = 123`));
+  });
+
+  it(`should be able to import external constants when it's a string`, () => {
+    const projection = builder
+      .addGlobalObject(
+        new GlobalObject("EXTERNAL_STRING", EXTERNAL_STRING, "string")
+      )
+      .exportProjection();
+
+    expect(projection).toEqual(
+      tsFormat(`const EXTERNAL_STRING = 'external string'`)
+    );
   });
 
   it(`should be able to import external constants as array`, () => {

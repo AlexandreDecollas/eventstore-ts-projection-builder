@@ -2,11 +2,11 @@ export class GlobalObject {
   constructor(
     private readonly alias: string,
     private readonly content: any,
-    private readonly type?: "array"
+    private readonly type?: "array" | "string"
   ) {}
 
   public toString(): string {
-    if (this.type === "array") {
+    if (this.type) {
       return this.addSpacing(
         `const ${this.alias} =  ${JSON.stringify(this.content)}`
       );
