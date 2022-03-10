@@ -17,7 +17,11 @@ import {
   TransformByFilter,
   WhenFilter,
 } from "../filters";
-import { EXTERNAL_VALUE } from "./projection-builder.spec.helper";
+import {
+  EXTERNAL_VALUE,
+  EXTERNAL_VALUES,
+} from "./projection-builder.spec.helper";
+import { GlobalObject } from "./global-object";
 
 describe("ProjectionBuilder", () => {
   let builder: ProjectionBuilder;
@@ -101,10 +105,7 @@ describe("ProjectionBuilder", () => {
       return 123 + plop;
     }
     const projection = builder
-      .addGlobalObject({
-        alias: "tutu",
-        content: tutu,
-      })
+      .addGlobalObject(new GlobalObject("tutu", tutu))
       .exportProjection();
 
     expect(projection).toEqual(
@@ -114,13 +115,20 @@ describe("ProjectionBuilder", () => {
 
   it(`should be able to import external constants`, () => {
     const projection = builder
-      .addGlobalObject({
-        alias: "EXTERNAL_VALUE",
-        content: EXTERNAL_VALUE,
-      })
+      .addGlobalObject(new GlobalObject("EXTERNAL_VALUE", EXTERNAL_VALUE))
       .exportProjection();
 
     expect(projection).toEqual(tsFormat(`const EXTERNAL_VALUE = 123`));
+  });
+
+  it(`should be able to import external constants as array`, () => {
+    const projection = builder
+      .addGlobalObject(
+        new GlobalObject("EXTERNAL_VALUES", EXTERNAL_VALUES, "array")
+      )
+      .exportProjection();
+
+    expect(projection).toEqual(`const EXTERNAL_VALUES = ["test", "tutu"];\n`);
   });
 
   it(`should be able to add const method helper in the global space of the projection`, () => {
@@ -128,10 +136,7 @@ describe("ProjectionBuilder", () => {
       return 123 + plop;
     };
     const projection = builder
-      .addGlobalObject({
-        alias: "tutu",
-        content: tutu,
-      })
+      .addGlobalObject(new GlobalObject("tutu", tutu))
       .exportProjection();
 
     expect(projection).toEqual(

@@ -71,25 +71,7 @@ export class Builder {
       return;
     }
     this.globalObjects.forEach((object: GlobalObject) => {
-      let stringifiedMethod = this.isNotAStandardFunction(object)
-        ? `const ${object.alias} =  ${object.content}`
-        : `${object.content}`;
-
-      if (stringifiedMethod.match("const undefined"))
-        stringifiedMethod = stringifiedMethod.replace(
-          "const undefined",
-          `const ${object.alias}2`
-        );
-
-      stringBuilder.push(`
-        
-        ${stringifiedMethod}
-        
-        `);
+      stringBuilder.push(object.toString());
     });
-  }
-
-  private isNotAStandardFunction(object: GlobalObject) {
-    return !`${object.content.toString()}`.match(/^function/);
   }
 }

@@ -8,7 +8,11 @@ import {
   ProjectionState,
   WhenFilter,
 } from "../src/";
-import { EXTERNAL_VALUE } from "../src/builder/projection-builder.spec.helper";
+import {
+  EXTERNAL_VALUE,
+  EXTERNAL_VALUES,
+} from "../src/builder/projection-builder.spec.helper";
+import { GlobalObject } from "../src/builder/global-object";
 
 export interface SlotDate {
   year: number;
@@ -158,14 +162,11 @@ export const buildRoomAvailabilityProjection = (): string => {
   const bookedRoomsState: BookedRoomsState = new BookedRoomsState();
 
   return projectionBuilder
-    .addGlobalObject({
-      alias: "mergeSlotsHelper",
-      content: mergeSlotsHelper,
-    })
-    .addGlobalObject({
-      alias: "EXTERNAL_VALUE",
-      content: EXTERNAL_VALUE,
-    })
+    .addGlobalObject(new GlobalObject("mergeSlotsHelper", mergeSlotsHelper))
+    .addGlobalObject(new GlobalObject("EXTERNAL_VALUE", EXTERNAL_VALUE))
+    .addGlobalObject(
+      new GlobalObject("EXTERNAL_VALUES", EXTERNAL_VALUES, "array")
+    )
     .addSelector(
       new FromStreamsSelector(["manager.room-added", "guest.room-booked"])
     )
