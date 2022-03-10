@@ -61,7 +61,9 @@ export class Builder {
         ) => stringBuilder.push(filter.toString())
       );
     }
-    const stringifiedProjection = stringBuilder.join("");
+    const stringifiedProjection = stringBuilder
+      .join("")
+      .replace(" exports.", "");
 
     return format(stringifiedProjection, { parser: "typescript" });
   }
