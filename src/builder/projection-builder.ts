@@ -49,4 +49,9 @@ export class ProjectionBuilder {
     this.builder.filter.push(filter);
     return this;
   }
+
+  public addGlobalObject(object: any): ProjectionBuilder {
+    this.builder.globalObjects.push(object)
+    return this
+  }
 }

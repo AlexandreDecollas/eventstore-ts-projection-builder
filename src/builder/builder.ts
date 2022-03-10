@@ -1,15 +1,14 @@
-import {ProjectionOptions} from '../options/projection.options';
-import {format} from 'prettier';
-import {FromStreamSelector} from '../selectors/from-stream.selector';
-import {FromCategorySelector} from '../selectors/from-category.selector';
-import {FromAllSelector} from '../selectors/from-all.selector';
-import {FromStreamsSelector} from '../selectors/from-streams.selector';
-import {TransformByFilter} from '../filters/transform-by.filter';
-import {FilterByFilter} from '../filters/filter-by.filter';
-import {WhenFilter} from '../filters/when.filter';
-import {ForEachStreamFilter} from '../filters/for-each-stream.filter';
-import {OutputStateFilter} from '../filters/output-state.filter';
-import {PartitionByFilter} from '../filters/partition-by.filter';
+import {ProjectionOptions} from "../options";
+import {format} from "prettier";
+import {FromAllSelector, FromCategorySelector, FromStreamSelector, FromStreamsSelector} from "../selectors";
+import {
+  FilterByFilter,
+  ForEachStreamFilter,
+  OutputStateFilter,
+  PartitionByFilter,
+  TransformByFilter,
+  WhenFilter
+} from "../filters";
 
 export class Builder {
   selector?:
@@ -29,8 +28,11 @@ export class Builder {
     | PartitionByFilter
   > = [];
 
+  globalObjects: Array<any> = [];
+
   public toString(): string {
     const stringBuilder: string[] = [];
+    this.stringifyHelpers(stringBuilder);
 
     if (this.options) {
       stringBuilder.push(this.options.toString());
@@ -49,13 +51,32 @@ export class Builder {
             | OutputStateFilter
             | TransformByFilter
             | FilterByFilter
-            | PartitionByFilter,
-        ) => stringBuilder.push(filter.toString()),
+            | PartitionByFilter
+        ) => stringBuilder.push(filter.toString())
       );
     }
-    const stringifiedProjection = stringBuilder
-      .join('')
+    const stringifiedProjection = stringBuilder.join("");
 
-    return format(stringifiedProjection, { parser: 'typescript' });
+    return format(stringifiedProjection, { parser: "typescript" });
+  }
+
+  private stringifyHelpers(stringBuilder: string[]): void {
+    if (!this.globalObjects) {
+      return;
+    }
+    this.globalObjects.forEach((object: any) => {
+      const stringifiedMethod = this.isNotAStandardFunction(object)
+        ? `const ${object.name} =  ${object}`
+        : `${object}`;
+      stringBuilder.push(`
+        
+        ${stringifiedMethod}
+        
+        `);
+    });
+  }
+
+  private isNotAStandardFunction(object: any) {
+    return !`${object.toString()}`.match(/^function/);
   }
 }
