@@ -63,9 +63,7 @@ export class Builder {
     }
     const stringifiedProjection = stringBuilder
       .join("")
-      .replace(" exports.", " ")
-      .replace("const", "var")
-      .replace("let", "var");
+      .replace(" exports.", " ");
 
     return format(stringifiedProjection, { parser: "typescript" });
   }
