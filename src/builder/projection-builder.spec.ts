@@ -1,11 +1,23 @@
-import {ProjectionBuilder} from "./projection-builder";
-import {ProjectionOptions} from "../options";
-import {format} from "prettier";
-import {EventTypeHandler, InitHandler} from "../handlers";
-import {ProjectionState} from "./projection.state";
+import { ProjectionBuilder } from "./projection-builder";
+import { ProjectionOptions } from "../options";
+import { format } from "prettier";
+import { EventTypeHandler, InitHandler } from "../handlers";
+import { ProjectionState } from "./projection.state";
 import * as fs from "fs";
-import {FromAllSelector, FromCategorySelector, FromStreamSelector, FromStreamsSelector} from "../selectors";
-import {FilterByFilter, OutputStateFilter, PartitionByFilter, TransformByFilter, WhenFilter} from "../filters";
+import {
+  FromAllSelector,
+  FromCategorySelector,
+  FromStreamSelector,
+  FromStreamsSelector,
+} from "../selectors";
+import {
+  FilterByFilter,
+  OutputStateFilter,
+  PartitionByFilter,
+  TransformByFilter,
+  WhenFilter,
+} from "../filters";
+import { EXTERNAL_VALUE } from "./projection-builder.spec.helper";
 
 describe("ProjectionBuilder", () => {
   let builder: ProjectionBuilder;
@@ -88,18 +100,39 @@ describe("ProjectionBuilder", () => {
     function tutu(plop: string): string {
       return 123 + plop;
     }
-    const projection = builder.addGlobalObject(tutu).exportProjection();
+    const projection = builder
+      .addGlobalObject({
+        alias: "tutu",
+        content: tutu,
+      })
+      .exportProjection();
 
     expect(projection).toEqual(
       tsFormat(`function tutu(plop) { return 123 + plop; }`)
     );
   });
 
+  it(`should be able to import external constants`, () => {
+    const projection = builder
+      .addGlobalObject({
+        alias: "EXTERNAL_VALUE",
+        content: EXTERNAL_VALUE,
+      })
+      .exportProjection();
+
+    expect(projection).toEqual(tsFormat(`const EXTERNAL_VALUE = 123`));
+  });
+
   it(`should be able to add const method helper in the global space of the projection`, () => {
-    const tutu = (plop: string): string  => {
+    const tutu = (plop: string): string => {
       return 123 + plop;
-    }
-    const projection = builder.addGlobalObject(tutu).exportProjection();
+    };
+    const projection = builder
+      .addGlobalObject({
+        alias: "tutu",
+        content: tutu,
+      })
+      .exportProjection();
 
     expect(projection).toEqual(
       tsFormat(`const tutu = (plop) => { return 123 + plop; }`)

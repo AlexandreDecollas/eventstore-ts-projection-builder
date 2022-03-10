@@ -1,14 +1,20 @@
-import {ProjectionOptions} from "../options";
-import {format} from "prettier";
-import {FromAllSelector, FromCategorySelector, FromStreamSelector, FromStreamsSelector} from "../selectors";
+import { ProjectionOptions } from "../options";
+import { format } from "prettier";
+import {
+  FromAllSelector,
+  FromCategorySelector,
+  FromStreamSelector,
+  FromStreamsSelector,
+} from "../selectors";
 import {
   FilterByFilter,
   ForEachStreamFilter,
   OutputStateFilter,
   PartitionByFilter,
   TransformByFilter,
-  WhenFilter
+  WhenFilter,
 } from "../filters";
+import { GlobalObject } from "./global-object";
 
 export class Builder {
   selector?:
@@ -28,7 +34,7 @@ export class Builder {
     | PartitionByFilter
   > = [];
 
-  globalObjects: Array<any> = [];
+  globalObjects: Array<GlobalObject> = [];
 
   public toString(): string {
     const stringBuilder: string[] = [];
@@ -64,10 +70,17 @@ export class Builder {
     if (!this.globalObjects) {
       return;
     }
-    this.globalObjects.forEach((object: any) => {
-      const stringifiedMethod = this.isNotAStandardFunction(object)
-        ? `const ${object.name} =  ${object}`
-        : `${object}`;
+    this.globalObjects.forEach((object: GlobalObject) => {
+      let stringifiedMethod = this.isNotAStandardFunction(object)
+        ? `const ${object.alias} =  ${object.content}`
+        : `${object.content}`;
+
+      if (stringifiedMethod.match("const undefined"))
+        stringifiedMethod = stringifiedMethod.replace(
+          "const undefined",
+          `const ${object.alias}2`
+        );
+
       stringBuilder.push(`
         
         ${stringifiedMethod}
@@ -76,7 +89,7 @@ export class Builder {
     });
   }
 
-  private isNotAStandardFunction(object: any) {
-    return !`${object.toString()}`.match(/^function/);
+  private isNotAStandardFunction(object: GlobalObject) {
+    return !`${object.content.toString()}`.match(/^function/);
   }
 }

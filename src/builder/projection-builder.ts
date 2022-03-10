@@ -1,14 +1,20 @@
-import {ProjectionOptions} from '../options';
-import {FromAllSelector, FromCategorySelector, FromStreamSelector, FromStreamsSelector} from '../selectors';
+import { ProjectionOptions } from "../options";
+import {
+  FromAllSelector,
+  FromCategorySelector,
+  FromStreamSelector,
+  FromStreamsSelector,
+} from "../selectors";
 import {
   FilterByFilter,
   ForEachStreamFilter,
   OutputStateFilter,
   PartitionByFilter,
   TransformByFilter,
-  WhenFilter
-} from '../filters';
-import {Builder} from './builder';
+  WhenFilter,
+} from "../filters";
+import { Builder } from "./builder";
+import { GlobalObject } from "./global-object";
 
 export class ProjectionBuilder {
   private builder: Builder;
@@ -26,7 +32,7 @@ export class ProjectionBuilder {
       | FromAllSelector
       | FromCategorySelector
       | FromStreamSelector
-      | FromStreamsSelector,
+      | FromStreamsSelector
   ): ProjectionBuilder {
     this.builder.selector = selector;
     return this;
@@ -44,14 +50,14 @@ export class ProjectionBuilder {
       | OutputStateFilter
       | TransformByFilter
       | FilterByFilter
-      | PartitionByFilter,
+      | PartitionByFilter
   ): ProjectionBuilder {
     this.builder.filter.push(filter);
     return this;
   }
 
-  public addGlobalObject(object: any): ProjectionBuilder {
-    this.builder.globalObjects.push(object)
-    return this
+  public addGlobalObject(object: GlobalObject): ProjectionBuilder {
+    this.builder.globalObjects.push(object);
+    return this;
   }
 }
