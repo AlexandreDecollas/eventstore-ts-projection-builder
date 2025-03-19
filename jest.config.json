@@ -1,0 +1,18 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testRegex": ".*\\.spec\\.ts$",
+  "testEnvironment": "jest-environment-jsdom",
+  "transform": {
+    "^.+\\.(t|j)sx?$": [
+      "@swc/jest"
+    ]
+  },
+  "collectCoverageFrom": [
+    "<rootDir>/src/**"
+  ]
+}
