@@ -1,8 +1,11 @@
 {
   "name": "eventstore-ts-projection-builder",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "A helper for building eventstore projection with typescript",
   "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "prebuild": "rimraf ./dist",
     "build": "tsc",
@@ -33,5 +36,8 @@
     "jest-environment-jsdom": "^29.7.0",
     "ts-jest": "^29.2.6",
     "rimraf": "^6.0.1"
+  },
+  "engines": {
+    "node": ">=20.x.x"
   }
 }
