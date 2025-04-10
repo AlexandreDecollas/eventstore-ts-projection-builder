@@ -7,7 +7,7 @@ import {
   ProjectionBuilder,
   ProjectionState,
   WhenFilter,
-} from "../src/";
+} from "eventstore-ts-projection-builder";
 import {
   EXTERNAL_VALUE,
   EXTERNAL_VALUES,
@@ -55,6 +55,7 @@ export interface Room {
 
 export class BookedRoomsState extends ProjectionState {
   rooms: { [key: number]: Room } = {};
+  myBigInt: bigint = BigInt("123123123123")
 }
 
 export const roomAddedEventHandlerCallBack = (

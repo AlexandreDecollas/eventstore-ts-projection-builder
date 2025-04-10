@@ -1,12 +1,13 @@
 import serializeJavascript from 'serialize-javascript';
 
 export class InitHandler<S> {
-  private callback = `$init: function f() {return ${serializeJavascript(
-    this.state,
-  )}}`;
+  private callback!: string
 
   constructor(private readonly state: S) {
     this.state = state;
+    this.callback = `$init: function f() {return ${serializeJavascript(
+	 this.state,
+    )}}`;
   }
 
   public toString(): string {

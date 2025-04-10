@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "strict": true,
+    "moduleResolution": "node",
+
+    "module": "esnext",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
-    "target": "es5",
+    "target": "esnext",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": ".",
@@ -16,8 +19,11 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "eventstore-ts-projection-builder": ["src/index.ts"]
+    }
   },
   "exclude": ["*.spec.ts", "*.js", "./dist", "./examples"],
   "include": ["./src"]

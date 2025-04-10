@@ -12,6 +12,9 @@
       "@swc/jest"
     ]
   },
+  "moduleNameMapper": {
+    "^eventstore-ts-projection-builder$": "<rootDir>/src/index.ts"
+  },
   "collectCoverageFrom": [
     "<rootDir>/src/**"
   ]
