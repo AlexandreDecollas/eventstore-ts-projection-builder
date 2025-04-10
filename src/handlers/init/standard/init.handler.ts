@@ -1,5 +1,7 @@
+import serializeJavascript from 'serialize-javascript';
+
 export class InitHandler<S> {
-  private callback = `$init: function f() {return ${JSON.stringify(
+  private callback = `$init: function f() {return ${serializeJavascript(
     this.state,
   )}}`;
 

@@ -1,3 +1,5 @@
+import serializeJavascript from 'serialize-javascript';
+
 export class GlobalObject {
   constructor(
     private readonly alias: string,
@@ -8,7 +10,7 @@ export class GlobalObject {
   public toString(): string {
     if (this.type) {
       return this.addSpacing(
-        `const ${this.alias} =  ${JSON.stringify(this.content)}`
+        `const ${this.alias} =  ${serializeJavascript(this.content)}`
       );
     }
 
