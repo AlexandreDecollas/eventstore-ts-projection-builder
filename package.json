@@ -1,6 +1,6 @@
 {
   "name": "eventstore-ts-projection-builder",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "A helper for building eventstore projection with typescript",
   "main": "dist/index.js",
   "type": "module",
